@@ -12,7 +12,7 @@ private:
   std::string signature;
 
 public:
-  Transaction(std::string sender, std::string recipient, double amt);
+  Transaction(std::string& sender, std::string& recipient, double amt);
   std::string calculateHash() const;
   void signTransaction(RSA* privateKey);
   bool verifyTransaction() const;
