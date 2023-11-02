@@ -13,13 +13,9 @@ private:
 
 public:
   Transaction(std::string sender, std::string recipient, double amt);
-
   std::string calculateHash() const;
-
   void signTransaction(RSA* privateKey);
-
   bool verifyTransaction() const;
-
   std::string getSenderAddress() const;
   std::string getRecipientAddress() const;
   double getAmount() const;
