@@ -17,6 +17,8 @@ public:
   std::string getRecipientAddress() const;
   double getAmount() const;
   std::string getData() const;
+
+  void printTransactionData() const;
 };
 
 #endif
