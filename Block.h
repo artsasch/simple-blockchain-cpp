@@ -14,8 +14,9 @@ private:
   int nonce;
 
 public:
-  Block(long long ts, const std::vector<Transaction>& txs, const std::string& prevHash);
+  Block(long long timestamp, const std::vector<Transaction>& transactions, const std::string& previousHash);
   std::string calculateHash() const;
+  int calculateNonce() const;
   void mineBlock(int difficulty);
   long long getTimestamp() const;
   std::vector<Transaction> getTransactions() const;
