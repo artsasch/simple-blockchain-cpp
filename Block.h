@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 #include "Transaction.h"
 
 class Block {
@@ -14,15 +15,18 @@ private:
   int nonce;
 
 public:
-  Block(long long timestamp, const std::vector<Transaction>& transactions, const std::string& previousHash);
-  std::string calculateHash() const;
+  Block(const std::vector<Transaction>& transactions, const std::string& previousHash);
+  long long generateTimestamp() const;
+  std::string calculateHash(long long timestamp) const;
   int calculateNonce() const;
   void mineBlock(int difficulty);
   long long getTimestamp() const;
-  std::vector<Transaction> getTransactions() const;
+  void printBlockTransactions() const;
   std::string getPreviousHash() const;
   std::string getHash() const;
   int getNonce() const;
+
+  void printBlock() const;
 };
 
 #endif
