@@ -5,6 +5,10 @@
 #include <openssl/sha.h>
 #include <sstream>
 #include <iomanip>
+#include <vector>
+#include <algorithm>
+
+const std::string BASE58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
 class HashUtil {
 public:
@@ -21,6 +25,41 @@ public:
     }
 
     return ss.str();
+  }
+
+  static std::string base58Encode(const std::vector<unsigned char>& input) {
+    std::vector<int> digits(input.size() * 138 / 100 + 1, 0);
+
+    for (size_t i = 0; i < input.size(); ++i) {
+        int carry = input[i];
+        for (size_t j = 0; j < digits.size(); ++j) {
+            carry += digits[j] << 8;
+            digits[j] = carry % 58;
+            carry /= 58;
+        }
+    }
+
+    std::string result;
+    for (size_t i = 0; i < digits.size(); ++i) {
+        result += BASE58_ALPHABET[digits[i]];
+    }
+
+    for (size_t i = 0; i < input.size() && input[i] == 0; ++i) {
+        result += '1';
+    }
+
+    std::reverse(result.begin(), result.end());
+    return result;
+  }
+
+  static std::vector<unsigned char> hexStringToByteArray(const std::string& hex) {
+    std::vector<unsigned char> bytes;
+    for (size_t i = 0; i < hex.length(); i += 2) {
+      std::string byteString = hex.substr(i, 2);
+      unsigned char byte = static_cast<unsigned char>(strtol(byteString.c_str(), nullptr, 16));
+      bytes.push_back(byte);
+    }
+    return bytes;
   }
 };
 
