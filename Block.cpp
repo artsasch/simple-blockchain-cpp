@@ -5,7 +5,11 @@
 #include <string>
 
 Block::Block(const std::vector<Transaction> &transactions, const std::string &previousHash)
-    : timestamp(generateTimestamp()), transactions(transactions), previousHash(previousHash), hash(calculateHash(timestamp)) {}
+  : timestamp(generateTimestamp()),
+    transactions(transactions),
+    previousHash(previousHash),
+    hash(calculateHash(timestamp)),
+    nonce(calculateNonce()) {}
 
 long long Block::generateTimestamp() const {
    return std::time(nullptr);
