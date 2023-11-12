@@ -16,12 +16,13 @@ private:
   std::string generateAddress(const std::string& publicKey) const;
 
 public:
-  Wallet();
+  Wallet(const double balance);
 
   void signTransaction(Transaction& transaction);
-  double getBalance() const;
-  std::string getAddress() const;
+  std::string getPrivateKey() const;
   std::string getPublicKey() const;
+  std::string getAddress() const;
+  double getBalance() const;
 };
 
 #endif
