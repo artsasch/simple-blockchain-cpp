@@ -1,15 +1,24 @@
 #include "Block.h"
+#include "Blockchain.h"
 #include "HashUtil.h"
 #include "Transaction.h"
 #include <ctime>
 #include <string>
+#include <vector>
 
-Block::Block(const std::vector<Transaction> &transactions, const std::string &previousHash)
+Block::Block()
+    : timestamp(generateTimestamp()),
+      transactions(),
+      previousHash("0") {}
+
+Block::Block(const std::string &previousHash)
   : timestamp(generateTimestamp()),
-    transactions(transactions),
-    previousHash(previousHash),
-    hash(calculateHash(timestamp)),
-    nonce(calculateNonce()) {}
+    transactions(),
+    previousHash(previousHash) {}
+
+void Block::addTransaction(const Transaction& transaction) {
+  transactions.push_back(transaction);
+}
 
 long long Block::generateTimestamp() const {
    return std::time(nullptr);
@@ -39,8 +48,20 @@ void Block::printBlock() const {
 }
 
 void Block::printBlockTransactions() const {
+  std::cout << "--------------------------" << std::endl;
   for (const Transaction& transaction : transactions) {
     transaction.printTransactionData();
     std::cout << "--------------------------" << std::endl;
   }
+}
+
+void Block::mineBlock(int& difficulty) {
+  std::string target(difficulty, '0');
+
+  do {
+    nonce++;
+    hash = calculateHash(timestamp);
+  } while (hash.substr(0, difficulty) != target);
+
+  std::cout << "Block mined: " << hash << std::endl;
 }
