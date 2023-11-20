@@ -69,17 +69,10 @@ std::string Wallet::generateAddress(const std::string &publicKey) const {
   unsigned char ripemd160Result[RIPEMD160_DIGEST_LENGTH];
   RIPEMD160(sha256Result, sizeof(sha256Result), ripemd160Result);
 
-  std::vector<unsigned char> extendedRipemd(1 + RIPEMD160_DIGEST_LENGTH);
-  extendedRipemd[0] = 0x00;
-  std::copy(ripemd160Result, ripemd160Result + RIPEMD160_DIGEST_LENGTH, extendedRipemd.begin() + 1);
-
-  unsigned char firstSha256[SHA256_DIGEST_LENGTH];
-  SHA256(extendedRipemd.data(), extendedRipemd.size(), firstSha256);
-
   unsigned char secondSha256[SHA256_DIGEST_LENGTH];
-  SHA256(firstSha256, sizeof(firstSha256), secondSha256);
+  SHA256(ripemd160Result, sizeof(ripemd160Result), secondSha256);
 
-  std::vector<unsigned char> addressBytes = extendedRipemd;
+  std::vector<unsigned char> addressBytes(ripemd160Result, ripemd160Result + RIPEMD160_DIGEST_LENGTH);
   addressBytes.insert(addressBytes.end(), secondSha256, secondSha256 + 4);
 
   return HashUtil::base58Encode(addressBytes);
