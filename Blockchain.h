@@ -8,11 +8,19 @@
 
 class Blockchain {
 private:
-  std::vector<Block> chain;
+  Blockchain() {};
+  Blockchain(const Blockchain&) = delete;
+  Blockchain& operator=(const Blockchain&) = delete;
 
+  static Blockchain* instance;
+
+  std::vector<Block> chain;
 public:
-  Blockchain();
-  void addBlock(Block block);
+  static Blockchain* getInstance();
+
+  void addBlock(const Block& block);
+
+  void printBlockchainBlocks() const;
 };
 
 #endif
