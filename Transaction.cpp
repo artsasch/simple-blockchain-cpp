@@ -2,7 +2,10 @@
 #include <iostream>
 
 Transaction::Transaction(const std::string &sender, const std::string &recipient, double amt, const std::string &data)
-  : senderAddress(sender), recipientAddress(recipient), amount(amt), data(data) {}
+  : senderAddress(sender),
+    recipientAddress(recipient),
+    amount(amt),
+    data(data) {}
 
 std::string Transaction::getSenderAddress() const {
   return senderAddress;
