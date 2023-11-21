@@ -9,12 +9,14 @@
 Block::Block()
     : timestamp(generateTimestamp()),
       transactions(),
-      previousHash("0") {}
+      previousHash("0"),
+      nonce(0) {}
 
 Block::Block(const std::string &previousHash)
   : timestamp(generateTimestamp()),
     transactions(),
-    previousHash(previousHash) {}
+    previousHash(previousHash),
+    nonce(0){}
 
 void Block::addTransaction(const Transaction& transaction) {
   transactions.push_back(transaction);
@@ -28,9 +30,9 @@ long long Block::getTimestamp() const {
   return timestamp;
 }
 
-std::string Block::calculateHash(long long timestamp) const {
-  std::string str_timestamp = std::to_string(timestamp);
-  return HashUtil::sha256(str_timestamp);
+std::string Block::calculateHash(int nonce) const {
+  std::string str_nonce = std::to_string(nonce);
+  return HashUtil::sha256(str_nonce);
 }
 
 std::string Block::getHash() const {
@@ -55,12 +57,14 @@ void Block::printBlockTransactions() const {
   }
 }
 
-void Block::mineBlock(int& difficulty) {
+void Block::mineBlock(const int& difficulty) {
   std::string target(difficulty, '0');
+  std::cout << "Mining started" << std::endl;
 
   do {
     nonce++;
-    hash = calculateHash(timestamp);
+    hash = calculateHash(nonce);
+    std::cout << nonce << std::endl;
   } while (hash.substr(0, difficulty) != target);
 
   std::cout << "Block mined: " << hash << std::endl;
