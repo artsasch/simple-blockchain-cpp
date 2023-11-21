@@ -18,7 +18,7 @@ private:
 public:
   static Blockchain* getInstance();
 
-  void addBlock(const Block& block);
+  void addBlock(Block& block);
 
   void printBlockchainBlocks() const;
 };
