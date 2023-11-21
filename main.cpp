@@ -6,8 +6,7 @@
 #include <string>
 
 int main() {
-    Blockchain* chain1 = Blockchain::getInstance();
-    Blockchain* chain2 = Blockchain::getInstance();
+    Blockchain* chain = Blockchain::getInstance();
     Wallet w(100.0);
 
     std::string privateKey = w.getPrivateKey();
@@ -28,7 +27,6 @@ int main() {
     b.addTransaction(t2);
     b.printBlockTransactions();
 
-    chain1->addBlock(b);
-    chain2->addBlock(b);
-    chain1->printBlockchainBlocks();
+    chain->addBlock(b);
+    chain->printBlockchainBlocks();
 }
