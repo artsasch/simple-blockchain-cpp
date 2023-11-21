@@ -21,13 +21,13 @@ public:
 
   void addTransaction(const Transaction& transaction);
   long long generateTimestamp() const;
-  std::string calculateHash(long long timestamp) const;
+  std::string calculateHash(int nonce) const;
   long long getTimestamp() const;
   void printBlockTransactions() const;
   std::string getPreviousHash() const;
   std::string getHash() const;
   int getNonce() const;
-  void mineBlock(int& difficulty);
+  void mineBlock(const int& difficulty);
 
   void printBlock() const;
 };
