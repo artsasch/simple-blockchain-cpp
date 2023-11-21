@@ -3,7 +3,8 @@
 
 Blockchain* Blockchain::instance = nullptr;
 
-void Blockchain::addBlock(const Block &block) {
+void Blockchain::addBlock(Block &block) {
+  block.mineBlock(3);
   chain.push_back(block);
 }
 
