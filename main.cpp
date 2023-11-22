@@ -19,14 +19,16 @@ int main() {
     std::cout << "Wallet address: " << address << std::endl;
     std::cout << "Wallet balance: " << balance << std::endl;
 
-    Transaction t1{"sender1", "recipient1", 15.0, "transaction1)"};
-    Transaction t2{"sender2", "recipient2", 25.0, "transaction2)"};
+    Transaction t1{"sender1", "recipient1", 15.0, "transaction1"};
+    Transaction t2{"sender2", "recipient2", 25.0, "transaction2"};
 
-    Block b;
-    b.addTransaction(t1);
-    b.addTransaction(t2);
-    b.printBlockTransactions();
+    Block b1;
+    b1.addTransaction(t1);
+    chain->addBlock(b1);
 
-    chain->addBlock(b);
+    Block b2(b1.getHash());
+    b2.addTransaction(t2);
+    chain->addBlock(b2);
+    
     chain->printBlockchainBlocks();
 }
