@@ -8,7 +8,7 @@
 
 class Block {
 private:
-  int index = 0;
+  int index;
   long long timestamp;
   std::vector<Transaction> transactions;
   std::string previousHash;
@@ -21,7 +21,7 @@ public:
 
   void addTransaction(const Transaction& transaction);
   long long generateTimestamp() const;
-  std::string calculateHash(int nonce) const;
+  std::string calculateHash(std::string& hashBlockData, int& nonce) const;
   long long getTimestamp() const;
   void printBlockTransactions() const;
   std::string getPreviousHash() const;
