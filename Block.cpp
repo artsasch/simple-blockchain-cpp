@@ -3,20 +3,26 @@
 #include "HashUtil.h"
 #include "Transaction.h"
 #include <ctime>
+#include <cwctype>
 #include <string>
 #include <vector>
 
+int indexCount = 0;
+int tempNonce = 0;
+
 Block::Block()
-    : timestamp(generateTimestamp()),
+    : index(indexCount++),
+      timestamp(generateTimestamp()),
       transactions(),
       previousHash("0"),
       nonce(0) {}
 
 Block::Block(const std::string &previousHash)
-  : timestamp(generateTimestamp()),
-    transactions(),
-    previousHash(previousHash),
-    nonce(0){}
+    : index(indexCount++),
+      timestamp(generateTimestamp()),
+      transactions(),
+      previousHash(previousHash),
+      nonce(0) {}
 
 void Block::addTransaction(const Transaction& transaction) {
   transactions.push_back(transaction);
@@ -26,13 +32,13 @@ long long Block::generateTimestamp() const {
    return std::time(nullptr);
 }
 
-long long Block::getTimestamp() const {
-  return timestamp;
+std::string Block::calculateHash(std::string& hashBlockData, int& nonce) const {
+  std::string preHashStr = hashBlockData + std::to_string(nonce);
+  return HashUtil::sha256(preHashStr);
 }
 
-std::string Block::calculateHash(int nonce) const {
-  std::string str_nonce = std::to_string(nonce);
-  return HashUtil::sha256(str_nonce);
+long long Block::getTimestamp() const {
+  return timestamp;
 }
 
 std::string Block::getHash() const {
@@ -44,9 +50,11 @@ std::string Block::getPreviousHash() const {
 }
 
 void Block::printBlock() const {
+  std::cout << "Block's index: " << this->index << std::endl;
   std::cout << "Block's timestamp: " << this->timestamp << std::endl;
   std::cout << "Block's previousHash: " << this->previousHash << std::endl;
   std::cout << "Block's hash: " << this->hash << std::endl;
+  std::cout << "Block's nonce: " << this->nonce << std::endl;
 }
 
 void Block::printBlockTransactions() const {
@@ -59,13 +67,15 @@ void Block::printBlockTransactions() const {
 
 void Block::mineBlock(const int& difficulty) {
   std::string target(difficulty, '0');
-  std::cout << "Mining started" << std::endl;
+  std::string hashBlockTransactions = HashUtil::hashBlockTransactions(transactions);
+  std::string headerBlockStr = std::to_string(index) + std::to_string(timestamp) + previousHash;
+  std::string hashBlockData = HashUtil::sha256(hashBlockTransactions + headerBlockStr);
 
   do {
-    nonce++;
-    hash = calculateHash(nonce);
-    std::cout << nonce << std::endl;
+    tempNonce++;
+    hash = calculateHash(hashBlockData, tempNonce);
   } while (hash.substr(0, difficulty) != target);
 
-  std::cout << "Block mined: " << hash << std::endl;
+  nonce = tempNonce;
+  tempNonce = 0;
 }
