@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <vector>
 #include <algorithm>
+#include "Transaction.h"
 
 const std::string BASE58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
@@ -60,6 +61,18 @@ public:
       bytes.push_back(byte);
     }
     return bytes;
+  }
+
+  static std::string hashBlockTransactions(const std::vector<Transaction>& transactions) {
+    std::string transactionsStr;
+    for (const auto& transaction : transactions) {
+      transactionsStr = transaction.getSenderAddress();
+      transactionsStr += transaction.getRecipientAddress();
+      transactionsStr += std::to_string(transaction.getAmount());
+      transactionsStr += transaction.getData();
+    }
+
+    return HashUtil::sha256(transactionsStr);
   }
 };
 
