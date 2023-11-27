@@ -23,6 +23,7 @@ public:
   std::string getPublicKey() const;
   std::string getAddress() const;
   double getBalance() const;
+  void printWallet() const;
 };
 
 #endif
