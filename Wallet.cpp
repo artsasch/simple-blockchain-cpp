@@ -7,6 +7,7 @@
 #include <openssl/ripemd.h>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 Wallet::Wallet(const double balance)
   : privateKey(generatePrivateKey()),
@@ -92,4 +93,11 @@ std::string Wallet::getAddress() const {
 
 double Wallet::getBalance() const {
   return balance;
+}
+
+void Wallet::printWallet() const {
+  std::cout << "Block's private key: " << this->privateKey << std::endl;
+  std::cout << "Block's public key: " << this->publicKey << std::endl;
+  std::cout << "Block's address: " << this->address << std::endl;
+  std::cout << "Block's balance: " << this->balance << std::endl;
 }
