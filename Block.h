@@ -1,10 +1,15 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include "Transaction.h"
+#include "HashUtil.h"
+#include "Transaction.h"
 #include <vector>
 #include <string>
 #include <iostream>
-#include "Transaction.h"
+#include <ctime>
+#include <cwctype>
+#include <vector>
 
 class Block {
 private:

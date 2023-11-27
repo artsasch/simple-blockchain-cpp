@@ -1,11 +1,4 @@
 #include "Block.h"
-#include "Blockchain.h"
-#include "HashUtil.h"
-#include "Transaction.h"
-#include <ctime>
-#include <cwctype>
-#include <string>
-#include <vector>
 
 int indexCount = 0;
 int tempNonce = 0;

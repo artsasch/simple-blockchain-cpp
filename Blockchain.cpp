@@ -1,5 +1,4 @@
 #include "Blockchain.h"
-#include "Block.h"
 
 Blockchain* Blockchain::instance = nullptr;
 
