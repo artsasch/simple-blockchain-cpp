@@ -18,12 +18,12 @@ private:
 public:
   Wallet(const double balance);
 
-  void signTransaction(Transaction& transaction);
   std::string getPrivateKey() const;
   std::string getPublicKey() const;
   std::string getAddress() const;
   double getBalance() const;
   void printWallet() const;
+  void changeBalance(int& newBalance);
 };
 
 #endif

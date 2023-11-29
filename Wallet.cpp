@@ -95,6 +95,10 @@ double Wallet::getBalance() const {
   return balance;
 }
 
+void Wallet::changeBalance(int& newBalance) {
+  balance = newBalance;
+}
+
 void Wallet::printWallet() const {
   std::cout << "Block's private key: " << this->privateKey << std::endl;
   std::cout << "Block's public key: " << this->publicKey << std::endl;

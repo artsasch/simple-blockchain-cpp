@@ -38,19 +38,19 @@ int main() {
         handlePrintWallet(w);
 
       if (commands[0] == "cb")
-        createBlock(b);
+        handleCreateBlock(b);
 
       if (commands[0] == "ct")
-        createTransaction(b, t, commands);
+        handleCreateTransaction(w, b, t, commands);
 
       if (commands[0] == "pbt")
-        printBlockTransactions(b);
+        handlePrintBlockTransactions(b);
 
       if (commands[0] == "abib")              //haha abib)
-        addBlockInBlockchain(chain, b);
+        handleAddBlockInBlockchain(chain, b, 3);
 
       if (commands[0] == "pc")
-        printBlockchainBlocks(chain);
+        handlePrintBlockchainBlocks(chain);
     }
 
     delete chain;

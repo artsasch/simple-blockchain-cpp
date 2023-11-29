@@ -67,6 +67,7 @@ void Block::mineBlock(const int& difficulty) {
   do {
     tempNonce++;
     hash = calculateHash(hashBlockData, tempNonce);
+    std::cout << "hash: " << hash << std::endl;
   } while (hash.substr(0, difficulty) != target);
 
   nonce = tempNonce;
