@@ -15,7 +15,7 @@ std::vector<std::string> split(const std::string& str) {
 
 int main() {
     std::string input;
-    Blockchain* chain = Blockchain::getInstance();
+    Blockchain& chain = Blockchain::getInstance();
     Wallet* w = nullptr;
     Block* b = nullptr;
     Transaction* t = nullptr;
@@ -53,7 +53,6 @@ int main() {
         handlePrintBlockchainBlocks(chain);
     }
 
-    delete chain;
     delete w;
     delete b;
     delete t;
