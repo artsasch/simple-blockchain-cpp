@@ -1,7 +1,5 @@
 #include "Blockchain.h"
 
-Blockchain* Blockchain::instance = nullptr;
-
 void Blockchain::addBlock(Block &block, const int& difficulty) {
   block.mineBlock(difficulty);
   chain.push_back(block);
@@ -15,9 +13,7 @@ void Blockchain::printBlockchainBlocks() const {
   }
 }
 
-Blockchain* Blockchain::getInstance() {
-  if (instance == nullptr) {
-    instance = new Blockchain();
-  }
+Blockchain & Blockchain::getInstance() {
+  static Blockchain instance;
   return instance;
 }
