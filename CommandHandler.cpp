@@ -47,8 +47,8 @@ void handleCreateTransaction(Wallet*& w, Block*& b, Transaction*& t, const std::
   }
 }
 
-void handleAddBlockInBlockchain(Blockchain*& chain, Block*& b, const int& difficulty) {
-  chain->addBlock(*b, difficulty);
+void handleAddBlockInBlockchain(Blockchain& chain, Block*& b, const int& difficulty) {
+  chain.addBlock(*b, difficulty);
   std::cout << "Block added in blockchain." << std::endl;
 }
 
@@ -56,6 +56,6 @@ void handlePrintBlockTransactions(Block*& b) {
   b->printBlockTransactions();
 }
 
-void handlePrintBlockchainBlocks(Blockchain*& chain) {
-  chain->printBlockchainBlocks();
+void handlePrintBlockchainBlocks(Blockchain& chain) {
+  chain.printBlockchainBlocks();
 }
